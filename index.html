@@ -743,6 +743,10 @@
       display: none;
     }
 
+    .mobile-filter-badge {
+      display: none;
+    }
+
     @media (max-width: 900px) {
       body {
         padding: 0;
@@ -778,6 +782,22 @@
         height: 18px;
         color: #1a1a2e;
         flex-shrink: 0;
+      }
+
+      .mobile-filter-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #0366D6;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 700;
+        min-width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        padding: 0 5px;
+        margin-left: 2px;
+        line-height: 1;
       }
 
       .mobile-filter-close {
@@ -936,7 +956,8 @@
     <svg class="mobile-filter-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
     </svg>
-    <span>Filter</span>
+    <span>Data Filter</span>
+    <span id="mobileFilterBadge" class="mobile-filter-badge" style="display: none;">0</span>
   </button>
   <div id="mobileOverlay" class="mobile-overlay"></div>
   <div class="page-layout">
@@ -2118,6 +2139,24 @@
       });
 
       updateSecondaryCharts(dtI, mI, rI, scI);
+
+      // Update mobile filter badge
+      const badge = document.getElementById('mobileFilterBadge');
+      if (badge) {
+        let filterCount = 0;
+        if (dtI !== -1) filterCount++;
+        if (mI !== -1) filterCount++;
+        if (rI !== -1) filterCount++;
+        if (scI !== -1) filterCount++;
+        if (selectedST.size < ST_LABELS.length) filterCount++;
+
+        if (filterCount > 0) {
+          badge.textContent = filterCount;
+          badge.style.display = 'inline-flex';
+        } else {
+          badge.style.display = 'none';
+        }
+      }
     }
 
     // ---- Init ----
