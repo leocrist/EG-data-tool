@@ -705,77 +705,101 @@
     }
 
     @media (max-width: 900px) {
+      body {
+        padding: 0;
+      }
+
       .page-layout {
         grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 0 16px 16px 16px;
       }
 
       .sidebar {
-        position: static;
-        max-height: none;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 16px;
+        margin: 0 -16px 16px -16px;
+        border-radius: 0 0 16px 16px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
       }
 
-      .chart-grid {
-        grid-template-columns: 1fr
-      }
-
-      .chart-card {
-        overflow-x: auto
-      }
-    }
-
-    @media (max-width: 640px) {
       .page-header {
+        display: flex;
         align-items: center;
-        gap: 10px
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
       }
 
       .page-logo {
-        width: 146px;
-        height: auto
+        width: 120px;
+        height: auto;
       }
 
       h1 {
-        font-size: 18px;
-        line-height: 26px
+        font-size: 16px;
+        line-height: 1.2;
+        text-align: right;
+        margin: 0;
       }
 
       .controls {
-        grid-template-columns: 1fr
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 0;
+      }
+
+      .controls .cg:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chart-card {
+        overflow-x: auto;
       }
 
       .tms-sel__trig,
       .tms-ms__trig {
-        min-height: 42px
+        min-height: 38px;
       }
 
       .tms-sel__val,
       .tms-ms__ph {
-        font-size: 14px
+        font-size: 13px;
       }
+    }
 
+    @media (max-width: 640px) {
       .tms-sel__menu,
       .tms-ms__pop {
         width: 100%;
-        max-width: 100%
+        max-width: 100%;
       }
 
       .chart-info,
       .chart-card__head {
         flex-direction: column;
-        align-items: flex-start
+        align-items: flex-start;
       }
 
       .chart-inner,
       .chart-card.wide .mini-chart {
-        min-width: 720px
+        min-width: 720px;
       }
 
       .mini-chart {
-        min-width: 620px
+        min-width: 620px;
       }
 
       .chart-card.mix-card .mini-chart {
-        height: 640px
+        height: 640px;
       }
 
       .chart-card.reference-card .mini-chart,
@@ -783,17 +807,17 @@
       .chart-card.combo-card .mini-chart,
       .chart-card.line-card .mini-chart,
       .chart-card.scenario-capacity-card .mini-chart {
-        min-width: 860px
+        min-width: 860px;
       }
 
       .pie-chart-grid {
-        min-width: 860px
+        min-width: 860px;
       }
 
       .legend {
         align-content: flex-start;
         max-height: none;
-        overflow: visible
+        overflow: visible;
       }
     }
   </style>
