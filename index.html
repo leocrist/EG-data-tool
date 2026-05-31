@@ -760,7 +760,7 @@
         z-index: 998;
         background: #fff;
         border: none;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         border-radius: 28px;
         padding: 10px 18px 10px 14px;
         align-items: center;
@@ -774,7 +774,7 @@
 
       .mobile-filter-btn:active {
         transform: scale(0.96);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       }
 
       .mobile-filter-logo {
@@ -803,7 +803,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(0,0,0,0.06);
+        background: rgba(0, 0, 0, 0.06);
         border: none;
         border-radius: 50%;
         width: 32px;
@@ -814,7 +814,7 @@
       }
 
       .mobile-filter-close:hover {
-        background: rgba(0,0,0,0.12);
+        background: rgba(0, 0, 0, 0.12);
       }
 
       .page-layout {
@@ -828,8 +828,8 @@
         top: 0;
         left: 0;
         bottom: 0;
-        width: 300px;
-        max-width: 85vw;
+        width: 420px;
+        max-width: 88vw;
         z-index: 1000;
         padding: 20px 16px;
         margin: 0;
@@ -846,7 +846,7 @@
 
       .sidebar.open {
         transform: translateX(0);
-        box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
       }
 
       .page-header {
@@ -904,6 +904,7 @@
     }
 
     @media (max-width: 640px) {
+
       .tms-sel__menu,
       .tms-ms__pop {
         width: 100%;
@@ -950,7 +951,7 @@
 
     @media (max-width: 400px) {
       .sidebar {
-        width: 320px;
+        width: 380px;
         max-width: 92vw;
         padding: 20px 12px;
       }
@@ -973,276 +974,280 @@
           <h1>Endgame Japan Data Color Tool</h1>
         </div>
         <button id="mobileFilterCloseBtn" class="mobile-filter-close" aria-label="Close Filters">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
       </header>
 
-  <div class="controls">
-    <!-- Data Type -->
-    <div class="cg"><label>Data Type</label>
-      <div class="tms-sel" id="sDT" data-val="-1">
-        <button class="tms-sel__trig" type="button">
-          <span class="tms-sel__val">All</span>
-          <svg class="tms-sel__arr" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="4,6 8,10 12,6" />
-          </svg>
-        </button>
-        <ul class="tms-sel__menu">
-          <li class="tms-sel__opt sel" data-v="-1">All<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="1">Generation (GWh)<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="0">Curtailment (GWh)<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-        </ul>
-      </div>
-    </div>
-    <!-- Month -->
-    <div class="cg"><label>Month</label>
-      <div class="tms-sel" id="sMon" data-val="-1">
-        <button class="tms-sel__trig" type="button">
-          <span class="tms-sel__val">All</span>
-          <svg class="tms-sel__arr" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="4,6 8,10 12,6" />
-          </svg>
-        </button>
-        <ul class="tms-sel__menu">
-          <li class="tms-sel__opt sel" data-v="-1">All<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="0">May (Month 5)<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="1">July (Month 7)<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="2">November (Month 11)<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-        </ul>
-      </div>
-    </div>
-    <!-- Region -->
-    <div class="cg"><label>Region</label>
-      <div class="tms-sel" id="sReg" data-val="-1">
-        <button class="tms-sel__trig" type="button">
-          <span class="tms-sel__val">All</span>
-          <svg class="tms-sel__arr" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="4,6 8,10 12,6" />
-          </svg>
-        </button>
-        <ul class="tms-sel__menu">
-          <li class="tms-sel__opt sel" data-v="-1">All<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="0">Hokkaido<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="1">Kyushu<svg class="tms-sel__chk" width="16" height="16" viewBox="0 0 16 16"
-              fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="2">Tokyo<svg class="tms-sel__chk" width="16" height="16" viewBox="0 0 16 16"
-              fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-        </ul>
-      </div>
-    </div>
-    <!-- Scenario -->
-    <div class="cg"><label>Scenario</label>
-      <div class="tms-sel" id="sSc" data-val="-1">
-        <button class="tms-sel__trig" type="button">
-          <span class="tms-sel__val">All</span>
-          <svg class="tms-sel__arr" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="4,6 8,10 12,6" />
-          </svg>
-        </button>
-        <ul class="tms-sel__menu">
-          <li class="tms-sel__opt sel" data-v="-1">All<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="0">2025 Historical<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="1">2040 (45GW)<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-          <li class="tms-sel__opt" data-v="2">2050 Base<svg class="tms-sel__chk" width="16" height="16"
-              viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="3,8 6.5,11.5 13,4.5" />
-            </svg></li>
-        </ul>
-      </div>
-    </div>
-    <!-- Technology MultiSelect -->
-    <div class="cg"><label>Technology</label>
-      <div class="tms-ms" id="msWrap">
-        <button class="tms-ms__trig" id="msBtn" type="button">
-          <span class="tms-ms__ph" id="msChips">All technologies</span>
-          <svg class="tms-ms__arr" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="4,6 8,10 12,6" />
-          </svg>
-        </button>
-        <div class="tms-ms__pop" id="msPanel">
-          <div class="tms-ms__search">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="7" cy="7" r="4" />
-              <line x1="10.5" y1="10.5" x2="14" y2="14" />
-            </svg>
-            <input type="text" id="stSearch" placeholder="Search technology..." oninput="filterSTList()">
-          </div>
-          <div class="tms-ms__list" id="stList"></div>
-          <div class="tms-ms__foot">
-            <button class="tms-ms__reset" onclick="clearAllST()">Reset</button>
-            <button class="tms-ms__selall" onclick="selectAllST()">Select all</button>
+      <div class="controls">
+        <!-- Data Type -->
+        <div class="cg"><label>Data Type</label>
+          <div class="tms-sel" id="sDT" data-val="-1">
+            <button class="tms-sel__trig" type="button">
+              <span class="tms-sel__val">All</span>
+              <svg class="tms-sel__arr" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4,6 8,10 12,6" />
+              </svg>
+            </button>
+            <ul class="tms-sel__menu">
+              <li class="tms-sel__opt sel" data-v="-1">All<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="1">Generation (GWh)<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="0">Curtailment (GWh)<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+            </ul>
           </div>
         </div>
-      </div>
-    </div>
-  </aside>
-  <main class="main-content">
+        <!-- Month -->
+        <div class="cg"><label>Month</label>
+          <div class="tms-sel" id="sMon" data-val="-1">
+            <button class="tms-sel__trig" type="button">
+              <span class="tms-sel__val">All</span>
+              <svg class="tms-sel__arr" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4,6 8,10 12,6" />
+              </svg>
+            </button>
+            <ul class="tms-sel__menu">
+              <li class="tms-sel__opt sel" data-v="-1">All<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="0">May (Month 5)<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="1">July (Month 7)<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="2">November (Month 11)<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Region -->
+        <div class="cg"><label>Region</label>
+          <div class="tms-sel" id="sReg" data-val="-1">
+            <button class="tms-sel__trig" type="button">
+              <span class="tms-sel__val">All</span>
+              <svg class="tms-sel__arr" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4,6 8,10 12,6" />
+              </svg>
+            </button>
+            <ul class="tms-sel__menu">
+              <li class="tms-sel__opt sel" data-v="-1">All<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="0">Hokkaido<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="1">Kyushu<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="2">Tokyo<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Scenario -->
+        <div class="cg"><label>Scenario</label>
+          <div class="tms-sel" id="sSc" data-val="-1">
+            <button class="tms-sel__trig" type="button">
+              <span class="tms-sel__val">All</span>
+              <svg class="tms-sel__arr" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4,6 8,10 12,6" />
+              </svg>
+            </button>
+            <ul class="tms-sel__menu">
+              <li class="tms-sel__opt sel" data-v="-1">All<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="0">2025 Historical<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="1">2040 (45GW)<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+              <li class="tms-sel__opt" data-v="2">2050 Base<svg class="tms-sel__chk" width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="3,8 6.5,11.5 13,4.5" />
+                </svg></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Technology MultiSelect -->
+        <div class="cg"><label>Technology</label>
+          <div class="tms-ms" id="msWrap">
+            <button class="tms-ms__trig" id="msBtn" type="button">
+              <span class="tms-ms__ph" id="msChips">All technologies</span>
+              <svg class="tms-ms__arr" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4,6 8,10 12,6" />
+              </svg>
+            </button>
+            <div class="tms-ms__pop" id="msPanel">
+              <div class="tms-ms__search">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="7" cy="7" r="4" />
+                  <line x1="10.5" y1="10.5" x2="14" y2="14" />
+                </svg>
+                <input type="text" id="stSearch" placeholder="Search technology..." oninput="filterSTList()">
+              </div>
+              <div class="tms-ms__list" id="stList"></div>
+              <div class="tms-ms__foot">
+                <button class="tms-ms__reset" onclick="clearAllST()">Reset</button>
+                <button class="tms-ms__selall" onclick="selectAllST()">Select all</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </aside>
+    <main class="main-content">
 
-  <div class="wrap">
-    <div class="chart-info">
-      <span class="chart-title" id="chartTitle">Generation &#8212; May &#8212; Hokkaido &#8212; 2025 Historical</span>
-      <span class="chart-tag">GWh / 30-min interval</span>
-    </div>
-    <div class="chart-inner"><canvas id="myChart"></canvas></div>
-    <div class="stats">
-      <div class="stat"><span class="stat-label">Peak Output</span><span class="stat-value"
-          id="statPeak">&#8212;</span><span class="stat-unit">GWh / interval</span></div>
-      <div class="stat"><span class="stat-label">Daily Total</span><span class="stat-value"
-          id="statTotal">&#8212;</span><span class="stat-unit">GWh</span></div>
-      <div class="stat"><span class="stat-label">Peak Time</span><span class="stat-value"
-          id="statPeakTime">&#8212;</span><span class="stat-unit">&nbsp;</span></div>
-      <div class="stat"><span class="stat-label">Technologies</span><span class="stat-value"
-          id="statTechs">&#8212;</span><span class="stat-unit">shown</span></div>
-    </div>
-    <div class="legend" id="legend"></div>
-  </div>
+      <div class="wrap">
+        <div class="chart-info">
+          <span class="chart-title" id="chartTitle">Generation &#8212; May &#8212; Hokkaido &#8212; 2025
+            Historical</span>
+          <span class="chart-tag">GWh / 30-min interval</span>
+        </div>
+        <div class="chart-inner"><canvas id="myChart"></canvas></div>
+        <div class="stats">
+          <div class="stat"><span class="stat-label">Peak Output</span><span class="stat-value"
+              id="statPeak">&#8212;</span><span class="stat-unit">GWh / interval</span></div>
+          <div class="stat"><span class="stat-label">Daily Total</span><span class="stat-value"
+              id="statTotal">&#8212;</span><span class="stat-unit">GWh</span></div>
+          <div class="stat"><span class="stat-label">Peak Time</span><span class="stat-value"
+              id="statPeakTime">&#8212;</span><span class="stat-unit">&nbsp;</span></div>
+          <div class="stat"><span class="stat-label">Technologies</span><span class="stat-value"
+              id="statTechs">&#8212;</span><span class="stat-unit">shown</span></div>
+        </div>
+        <div class="legend" id="legend"></div>
+      </div>
 
-  <div class="chart-grid">
-    <section class="chart-card wide mix-card">
-      <div class="chart-card__head">
-        <span class="chart-card__title">Generation mix by sub-technology</span>
-        <span class="chart-card__tag">Daily GWh</span>
+      <div class="chart-grid">
+        <section class="chart-card wide mix-card">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Generation mix by sub-technology</span>
+            <span class="chart-card__tag">Daily GWh</span>
+          </div>
+          <div class="mini-chart"><canvas id="mixChart"></canvas></div>
+        </section>
+        <section class="chart-card">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Scenario total by region</span>
+            <span class="chart-card__tag">Generation GWh</span>
+          </div>
+          <div class="mini-chart"><canvas id="scenarioChart"></canvas></div>
+        </section>
+        <section class="chart-card">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Curtailment ratio by scenario</span>
+            <span class="chart-card__tag">Curtailment / generation</span>
+          </div>
+          <div class="mini-chart"><canvas id="ratioChart"></canvas></div>
+        </section>
+        <section class="chart-card wide">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Generation vs curtailment profile</span>
+            <span class="chart-card__tag">GWh / 30-min interval</span>
+          </div>
+          <div class="mini-chart"><canvas id="curtailChart"></canvas></div>
+        </section>
+        <section class="chart-card wide combo-card">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Generation, curtailment and ratio by month/scenario</span>
+            <span class="chart-card__tag">Bar = GWh · Line = %</span>
+          </div>
+          <div class="mini-chart"><canvas id="volumeRatioComboChart"></canvas></div>
+        </section>
+        <section class="chart-card wide line-card">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Scenario generation profile comparison</span>
+            <span class="chart-card__tag">GWh / 30-min interval</span>
+          </div>
+          <div class="mini-chart"><canvas id="scenarioProfileLineChart"></canvas></div>
+        </section>
+        <section class="chart-card wide pie-card">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Share breakdown summary</span>
+            <span class="chart-card__tag">Doughnut charts · selected filters</span>
+          </div>
+          <div class="pie-chart-grid">
+            <div class="pie-chart-item">
+              <div class="mini-chart"><canvas id="regionSharePieChart"></canvas></div>
+            </div>
+            <div class="pie-chart-item">
+              <div class="mini-chart"><canvas id="scenarioSharePieChart"></canvas></div>
+            </div>
+            <div class="pie-chart-item">
+              <div class="mini-chart"><canvas id="curtailmentSharePieChart"></canvas></div>
+            </div>
+          </div>
+        </section>
+        <section class="chart-card wide reference-card">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Technology total by month and scenario</span>
+            <span class="chart-card__tag">GWh · actual month / scenario / selected region</span>
+          </div>
+          <div class="mini-chart"><canvas id="yoyCapacityChart"></canvas></div>
+        </section>
+        <section class="chart-card wide regional-card">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Technology total by region and scenario</span>
+            <span class="chart-card__tag">GWh · Hokkaido / Kyushu / Tokyo</span>
+          </div>
+          <div class="mini-chart"><canvas id="regionalGenerationChart"></canvas></div>
+        </section>
+        <section class="chart-card wide scenario-capacity-card">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Scenario summary by selected technologies</span>
+            <span class="chart-card__tag">GWh · selected months and regions</span>
+          </div>
+          <div class="mini-chart"><canvas id="scenarioCapacityChart"></canvas></div>
+        </section>
       </div>
-      <div class="mini-chart"><canvas id="mixChart"></canvas></div>
-    </section>
-    <section class="chart-card">
-      <div class="chart-card__head">
-        <span class="chart-card__title">Scenario total by region</span>
-        <span class="chart-card__tag">Generation GWh</span>
-      </div>
-      <div class="mini-chart"><canvas id="scenarioChart"></canvas></div>
-    </section>
-    <section class="chart-card">
-      <div class="chart-card__head">
-        <span class="chart-card__title">Curtailment ratio by scenario</span>
-        <span class="chart-card__tag">Curtailment / generation</span>
-      </div>
-      <div class="mini-chart"><canvas id="ratioChart"></canvas></div>
-    </section>
-    <section class="chart-card wide">
-      <div class="chart-card__head">
-        <span class="chart-card__title">Generation vs curtailment profile</span>
-        <span class="chart-card__tag">GWh / 30-min interval</span>
-      </div>
-      <div class="mini-chart"><canvas id="curtailChart"></canvas></div>
-    </section>
-    <section class="chart-card wide combo-card">
-      <div class="chart-card__head">
-        <span class="chart-card__title">Generation, curtailment and ratio by month/scenario</span>
-        <span class="chart-card__tag">Bar = GWh · Line = %</span>
-      </div>
-      <div class="mini-chart"><canvas id="volumeRatioComboChart"></canvas></div>
-    </section>
-    <section class="chart-card wide line-card">
-      <div class="chart-card__head">
-        <span class="chart-card__title">Scenario generation profile comparison</span>
-        <span class="chart-card__tag">GWh / 30-min interval</span>
-      </div>
-      <div class="mini-chart"><canvas id="scenarioProfileLineChart"></canvas></div>
-    </section>
-    <section class="chart-card wide pie-card">
-      <div class="chart-card__head">
-        <span class="chart-card__title">Share breakdown summary</span>
-        <span class="chart-card__tag">Doughnut charts · selected filters</span>
-      </div>
-      <div class="pie-chart-grid">
-        <div class="pie-chart-item">
-          <div class="mini-chart"><canvas id="regionSharePieChart"></canvas></div>
-        </div>
-        <div class="pie-chart-item">
-          <div class="mini-chart"><canvas id="scenarioSharePieChart"></canvas></div>
-        </div>
-        <div class="pie-chart-item">
-          <div class="mini-chart"><canvas id="curtailmentSharePieChart"></canvas></div>
-        </div>
-      </div>
-    </section>
-    <section class="chart-card wide reference-card">
-      <div class="chart-card__head">
-        <span class="chart-card__title">Technology total by month and scenario</span>
-        <span class="chart-card__tag">GWh · actual month / scenario / selected region</span>
-      </div>
-      <div class="mini-chart"><canvas id="yoyCapacityChart"></canvas></div>
-    </section>
-    <section class="chart-card wide regional-card">
-      <div class="chart-card__head">
-        <span class="chart-card__title">Technology total by region and scenario</span>
-        <span class="chart-card__tag">GWh · Hokkaido / Kyushu / Tokyo</span>
-      </div>
-      <div class="mini-chart"><canvas id="regionalGenerationChart"></canvas></div>
-    </section>
-    <section class="chart-card wide scenario-capacity-card">
-      <div class="chart-card__head">
-        <span class="chart-card__title">Scenario summary by selected technologies</span>
-        <span class="chart-card__tag">GWh · selected months and regions</span>
-      </div>
-      <div class="mini-chart"><canvas id="scenarioCapacityChart"></canvas></div>
-    </section>
+    </main>
   </div>
-  </main>
-</div>
 
   <script>
     const DT_LABELS = ["Curtailment (GWh)", "Generation (GWh)"];
