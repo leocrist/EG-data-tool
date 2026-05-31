@@ -123,8 +123,7 @@
     .sidebar {
       position: sticky;
       top: 24px;
-      max-height: calc(100vh - 48px);
-      overflow-y: auto;
+      z-index: 100;
       padding: 24px;
       background: rgba(150, 215, 255, 0.45);
       backdrop-filter: blur(16px);
@@ -132,14 +131,6 @@
       border-radius: 16px;
       box-shadow: 0 8px 32px rgba(3, 102, 214, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.4);
-    }
-
-    .sidebar::-webkit-scrollbar {
-      width: 4px;
-    }
-    .sidebar::-webkit-scrollbar-thumb {
-      background: rgba(3, 102, 214, 0.2);
-      border-radius: 4px;
     }
 
     .main-content {
