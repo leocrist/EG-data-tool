@@ -112,23 +112,46 @@
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 760'%3E%3Crect width='1440' height='760' fill='%23C7EAFB'/%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-linecap='round'%3E%3Cpath d='M-170 206C45 203 260 197 414 260c140 57 226 162 333 265 87 84 165 108 260 85 112-27 212-10 393 70' stroke-width='2.2' opacity='.82'/%3E%3Cpath d='M-142 255c208 0 405-4 548 54 120 49 197 135 292 228 94 91 173 133 285 115 112-17 232 3 414 75' stroke-width='1.1' opacity='.55'/%3E%3Cpath d='M-122 304c197 2 381 6 511 58 108 43 182 116 270 203 101 99 190 152 313 146 119-6 246 20 432 91' stroke-width='1.1' opacity='.55'/%3E%3Cpath d='M-112 354c184 4 356 14 475 63 98 40 166 99 249 183 106 107 206 171 344 179' stroke-width='1.05' opacity='.5'/%3E%3Cpath d='M-112 404c174 7 329 21 438 67 88 38 152 88 229 169 90 94 181 161 302 191' stroke-width='1' opacity='.45'/%3E%3Cpath d='M872-110c70 96 131 189 155 285 22 90-2 161-10 246-10 104 27 176 104 222 91 54 199 61 333 106' stroke-width='2.3' opacity='.82'/%3E%3Cpath d='M788-100c72 101 131 195 149 286 16 82-10 148-21 223-16 111 15 191 91 245 86 62 191 76 332 126' stroke-width='1.15' opacity='.55'/%3E%3Cpath d='M705-92c70 103 126 195 138 281 12 75-18 136-31 205-21 114 3 201 75 263 79 68 178 90 322 146' stroke-width='1.1' opacity='.52'/%3E%3Cpath d='M-160 642c80 32 146 72 199 124 55 53 91 114 124 191' stroke-width='2.2' opacity='.78'/%3E%3Cpath d='M-122 592c91 38 167 83 228 142 61 59 102 126 138 207' stroke-width='1.05' opacity='.5'/%3E%3C/g%3E%3C/svg%3E")
     }
 
-    /* ── Controls layout ── */
-    .controls {
+    /* ── Page Layout ── */
+    .page-layout {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: var(--home-space-3);
-      margin-bottom: 20px;
-      align-items: flex-end;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .sidebar {
       position: sticky;
-      top: 10px;
-      z-index: 100;
-      padding: 16px;
+      top: 24px;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      padding: 24px;
       background: rgba(150, 215, 255, 0.45);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-radius: 16px;
       box-shadow: 0 8px 32px rgba(3, 102, 214, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .sidebar::-webkit-scrollbar-thumb {
+      background: rgba(3, 102, 214, 0.2);
+      border-radius: 4px;
+    }
+
+    .main-content {
+      min-width: 0;
+    }
+
+    /* ── Controls layout ── */
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--home-space-3);
+      margin-bottom: 20px;
     }
 
     .cg {
@@ -691,6 +714,15 @@
     }
 
     @media (max-width: 900px) {
+      .page-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        max-height: none;
+      }
+
       .chart-grid {
         grid-template-columns: 1fr
       }
@@ -777,7 +809,9 @@
 </head>
 
 <body>
-  <header class="page-header">
+  <div class="page-layout">
+    <aside class="sidebar">
+      <header class="page-header">
     <img class="page-logo" src="./logo-black.svg" alt="Endgame" />
     <h1>Endgame Japan Data Color Tool</h1>
   </header>
@@ -959,6 +993,8 @@
     </div>
     <div class="legend" id="legend"></div>
   </div>
+    </aside>
+    <main class="main-content">
 
   <div class="chart-grid">
     <section class="chart-card wide mix-card">
@@ -1042,6 +1078,8 @@
       <div class="mini-chart"><canvas id="scenarioCapacityChart"></canvas></div>
     </section>
   </div>
+  </main>
+</div>
 
   <script>
     const DT_LABELS = ["Curtailment (GWh)", "Generation (GWh)"];
