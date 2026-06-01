@@ -586,22 +586,18 @@
       border: 1px solid rgba(3, 102, 214, 0.12);
       box-shadow: 0 2px 8px rgba(3, 33, 56, 0.04);
       border-radius: 20px;
-      padding: 4px 8px;
+      padding: 4px 10px;
       height: 28px;
-      width: 124px; /* Collapsed width */
+      gap: 10px;
       overflow: hidden;
-      cursor: pointer;
       box-sizing: border-box;
-      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .chart-height-widget:hover,
-    .chart-height-widget.active {
-      width: 270px; /* Slide open */
+    .chart-height-widget:hover {
       background: rgba(255, 255, 255, 0.94);
       border-color: rgba(3, 102, 214, 0.24);
       box-shadow: 0 4px 16px rgba(3, 33, 56, 0.08);
-      padding-right: 8px;
     }
 
     .height-widget-btn {
@@ -611,15 +607,12 @@
       color: var(--home-color-text-secondary);
       flex-shrink: 0;
       transition: color 0.2s ease;
-      width: 100%;
       height: 100%;
       user-select: none;
     }
 
-    .chart-height-widget:hover .height-widget-btn,
-    .chart-height-widget.active .height-widget-btn {
+    .chart-height-widget:hover .height-widget-btn {
       color: var(--home-color-focus);
-      width: auto;
     }
 
     .gear-icon {
@@ -627,8 +620,7 @@
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .chart-height-widget:hover .gear-icon,
-    .chart-height-widget.active .gear-icon {
+    .chart-height-widget:hover .gear-icon {
       transform: rotate(45deg);
     }
 
@@ -636,39 +628,13 @@
       font-size: 11px;
       font-weight: 600;
       white-space: nowrap;
-      transition: opacity 0.2s ease, width 0.2s ease, margin 0.2s ease;
-      opacity: 1;
-      width: auto;
-    }
-
-    .chart-height-widget:hover .height-widget-label,
-    .chart-height-widget.active .height-widget-label {
-      opacity: 0;
-      width: 0;
-      margin: 0;
-      overflow: hidden;
-      pointer-events: none;
     }
 
     .height-widget-pop {
       display: flex;
       align-items: center;
       gap: 8px;
-      opacity: 0;
-      transform: translateX(10px);
-      transition: opacity 0.2s ease 0.05s, transform 0.2s ease 0.05s, width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       flex-shrink: 0;
-      width: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .chart-height-widget:hover .height-widget-pop,
-    .chart-height-widget.active .height-widget-pop {
-      opacity: 1;
-      transform: translateX(0);
-      width: 226px;
-      pointer-events: auto;
     }
 
     .height-widget-pop .h-val {
@@ -684,7 +650,7 @@
     input[type=range].h-slider {
       -webkit-appearance: none;
       appearance: none;
-      width: 140px;
+      width: 90px;
       height: 4px;
       border-radius: 99px;
       background: var(--home-color-border-strong);
@@ -1701,11 +1667,6 @@
       }
     });
     document.addEventListener('click', e => {
-      // Close active height widgets if clicking outside them
-      document.querySelectorAll('.chart-height-widget.active').forEach(w => {
-        if (!w.contains(e.target)) w.classList.remove('active');
-      });
-
       if (!document.getElementById('msWrap').contains(e.target)) {
         closeAllSels();
       }
@@ -1820,9 +1781,7 @@
     // ── Per-chart height sliders ─────────────────────────────────────────────
     function wireHeightSlider(sliderId, targetEl, chartRef) {
       const slider = document.getElementById(sliderId);
-      const widget = slider.closest('.chart-height-widget');
       const valEl  = document.getElementById(sliderId.replace('hSlider', 'hVal'));
-      const btn    = widget.querySelector('.height-widget-btn');
 
       const apply  = () => {
         const h = slider.value;
@@ -1832,21 +1791,6 @@
       };
       apply(); // sync CSS height to slider default on load
       slider.addEventListener('input', apply);
-
-      // Support click-to-toggle on mobile touch screens
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        // Close all other active height widgets
-        document.querySelectorAll('.chart-height-widget').forEach(w => {
-          if (w !== widget) w.classList.remove('active');
-        });
-        widget.classList.toggle('active');
-      });
-
-      // Stop click bubbling on popup container to avoid closing
-      widget.querySelector('.height-widget-pop').addEventListener('click', e => {
-        e.stopPropagation();
-      });
     }
     // Wired after all chart objects are created (below)
     // ─────────────────────────────────────────────────────────────────────────
