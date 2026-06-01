@@ -568,50 +568,86 @@
     }
 
     /* ── Per-chart inline height control widget ── */
+    .chart-title-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
     .chart-height-widget {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 200;
-      display: flex;
+      position: relative;
+      z-index: 10;
+      display: inline-flex;
       align-items: center;
       background: rgba(255, 255, 255, 0.76);
       backdrop-filter: blur(12px) saturate(1.2);
       -webkit-backdrop-filter: blur(12px) saturate(1.2);
       border: 1px solid rgba(3, 102, 214, 0.12);
-      box-shadow: 0 4px 16px rgba(3, 33, 56, 0.06);
+      box-shadow: 0 2px 8px rgba(3, 33, 56, 0.04);
       border-radius: 20px;
-      padding: 4px;
+      padding: 4px 8px;
       height: 28px;
-      width: 28px; /* Collapsed width */
+      width: 124px; /* Collapsed width */
       overflow: hidden;
       cursor: pointer;
+      box-sizing: border-box;
       transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .chart-height-widget:hover,
     .chart-height-widget.active {
-      width: 172px; /* Slide open */
+      width: 270px; /* Slide open */
       background: rgba(255, 255, 255, 0.94);
       border-color: rgba(3, 102, 214, 0.24);
-      box-shadow: 0 6px 20px rgba(3, 33, 56, 0.1);
+      box-shadow: 0 4px 16px rgba(3, 33, 56, 0.08);
+      padding-right: 8px;
     }
 
     .height-widget-btn {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 6px;
       color: var(--home-color-text-secondary);
       flex-shrink: 0;
       transition: color 0.2s ease;
+      width: 100%;
+      height: 100%;
+      user-select: none;
     }
 
     .chart-height-widget:hover .height-widget-btn,
     .chart-height-widget.active .height-widget-btn {
       color: var(--home-color-focus);
+      width: auto;
+    }
+
+    .gear-icon {
+      flex-shrink: 0;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .chart-height-widget:hover .gear-icon,
+    .chart-height-widget.active .gear-icon {
+      transform: rotate(45deg);
+    }
+
+    .height-widget-label {
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: opacity 0.2s ease, width 0.2s ease, margin 0.2s ease;
+      opacity: 1;
+      width: auto;
+    }
+
+    .chart-height-widget:hover .height-widget-label,
+    .chart-height-widget.active .height-widget-label {
+      opacity: 0;
+      width: 0;
+      margin: 0;
+      overflow: hidden;
+      pointer-events: none;
     }
 
     .height-widget-pop {
@@ -620,16 +656,19 @@
       gap: 8px;
       opacity: 0;
       transform: translateX(10px);
-      transition: opacity 0.25s ease 0.05s, transform 0.25s ease 0.05s;
+      transition: opacity 0.2s ease 0.05s, transform 0.2s ease 0.05s, width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       flex-shrink: 0;
-      width: 136px;
-      padding-left: 4px;
+      width: 0;
+      overflow: hidden;
+      pointer-events: none;
     }
 
     .chart-height-widget:hover .height-widget-pop,
     .chart-height-widget.active .height-widget-pop {
       opacity: 1;
       transform: translateX(0);
+      width: 226px;
+      pointer-events: auto;
     }
 
     .height-widget-pop .h-val {
@@ -637,7 +676,7 @@
       font-weight: 600;
       color: var(--home-color-text-muted);
       white-space: nowrap;
-      min-width: 36px;
+      min-width: 38px;
       text-align: right;
       font-variant-numeric: tabular-nums;
     }
@@ -645,7 +684,7 @@
     input[type=range].h-slider {
       -webkit-appearance: none;
       appearance: none;
-      width: 80px;
+      width: 140px;
       height: 4px;
       border-radius: 99px;
       background: var(--home-color-border-strong);
@@ -1267,25 +1306,26 @@
 
       <div class="wrap">
         <div class="chart-info">
-          <span class="chart-title" id="chartTitle">Generation &#8212; May &#8212; Hokkaido &#8212; 2025
-            Historical</span>
+          <div class="chart-title-group">
+            <span class="chart-title" id="chartTitle">Generation &#8212; May &#8212; Hokkaido &#8212; 2025 Historical</span>
+            <div class="chart-height-widget">
+              <div class="height-widget-btn" title="Adjust chart height">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="gear-icon">
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
+                <span class="height-widget-label">Chart settings</span>
+              </div>
+              <div class="height-widget-pop">
+                <input type="range" id="hSlider0" class="h-slider" min="300" max="1000" step="20" value="740">
+                <span class="h-val" id="hVal0">740px</span>
+              </div>
+            </div>
+          </div>
           <span class="chart-tag">GWh / 30-min interval</span>
         </div>
         <div class="chart-inner">
           <canvas id="myChart"></canvas>
-          <div class="chart-height-widget">
-            <div class="height-widget-btn" title="Adjust chart height">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="8 3 12 7 16 3" />
-                <polyline points="8 21 12 17 16 21" />
-                <line x1="12" y1="7" x2="12" y2="17" />
-              </svg>
-            </div>
-            <div class="height-widget-pop">
-              <input type="range" id="hSlider0" class="h-slider" min="300" max="1000" step="20" value="740">
-              <span class="h-val" id="hVal0">740px</span>
-            </div>
-          </div>
         </div>
         <div class="stats">
           <div class="stat"><span class="stat-label">Peak Output</span><span class="stat-value"
@@ -1362,68 +1402,74 @@
         </section>
         <section class="chart-card wide reference-card">
           <div class="chart-card__head">
-            <span class="chart-card__title">Technology total by month and scenario</span>
+            <div class="chart-title-group">
+              <span class="chart-card__title">Technology total by month and scenario</span>
+              <div class="chart-height-widget">
+                <div class="height-widget-btn" title="Adjust chart height">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="gear-icon">
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                  </svg>
+                  <span class="height-widget-label">Chart settings</span>
+                </div>
+                <div class="height-widget-pop">
+                  <input type="range" id="hSlider1" class="h-slider" min="200" max="900" step="20" value="440">
+                  <span class="h-val" id="hVal1">440px</span>
+                </div>
+              </div>
+            </div>
             <span class="chart-card__tag">GWh · actual month / scenario / selected region</span>
           </div>
           <div class="mini-chart">
             <canvas id="yoyCapacityChart"></canvas>
-            <div class="chart-height-widget">
-              <div class="height-widget-btn" title="Adjust chart height">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="8 3 12 7 16 3" />
-                  <polyline points="8 21 12 17 16 21" />
-                  <line x1="12" y1="7" x2="12" y2="17" />
-                </svg>
-              </div>
-              <div class="height-widget-pop">
-                <input type="range" id="hSlider1" class="h-slider" min="200" max="900" step="20" value="440">
-                <span class="h-val" id="hVal1">440px</span>
-              </div>
-            </div>
           </div>
         </section>
         <section class="chart-card wide regional-card">
           <div class="chart-card__head">
-            <span class="chart-card__title">Technology total by region and scenario</span>
+            <div class="chart-title-group">
+              <span class="chart-card__title">Technology total by region and scenario</span>
+              <div class="chart-height-widget">
+                <div class="height-widget-btn" title="Adjust chart height">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="gear-icon">
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                  </svg>
+                  <span class="height-widget-label">Chart settings</span>
+                </div>
+                <div class="height-widget-pop">
+                  <input type="range" id="hSlider2" class="h-slider" min="200" max="900" step="20" value="360">
+                  <span class="h-val" id="hVal2">360px</span>
+                </div>
+              </div>
+            </div>
             <span class="chart-card__tag">GWh · Hokkaido / Kyushu / Tokyo</span>
           </div>
           <div class="mini-chart">
             <canvas id="regionalGenerationChart"></canvas>
-            <div class="chart-height-widget">
-              <div class="height-widget-btn" title="Adjust chart height">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="8 3 12 7 16 3" />
-                  <polyline points="8 21 12 17 16 21" />
-                  <line x1="12" y1="7" x2="12" y2="17" />
-                </svg>
-              </div>
-              <div class="height-widget-pop">
-                <input type="range" id="hSlider2" class="h-slider" min="200" max="900" step="20" value="360">
-                <span class="h-val" id="hVal2">360px</span>
-              </div>
-            </div>
           </div>
         </section>
         <section class="chart-card wide scenario-capacity-card">
           <div class="chart-card__head">
-            <span class="chart-card__title">Scenario summary by selected technologies</span>
+            <div class="chart-title-group">
+              <span class="chart-card__title">Scenario summary by selected technologies</span>
+              <div class="chart-height-widget">
+                <div class="height-widget-btn" title="Adjust chart height">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="gear-icon">
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                  </svg>
+                  <span class="height-widget-label">Chart settings</span>
+                </div>
+                <div class="height-widget-pop">
+                  <input type="range" id="hSlider3" class="h-slider" min="200" max="900" step="20" value="560">
+                  <span class="h-val" id="hVal3">560px</span>
+                </div>
+              </div>
+            </div>
             <span class="chart-card__tag">GWh · selected months and regions</span>
           </div>
           <div class="mini-chart">
             <canvas id="scenarioCapacityChart"></canvas>
-            <div class="chart-height-widget">
-              <div class="height-widget-btn" title="Adjust chart height">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="8 3 12 7 16 3" />
-                  <polyline points="8 21 12 17 16 21" />
-                  <line x1="12" y1="7" x2="12" y2="17" />
-                </svg>
-              </div>
-              <div class="height-widget-pop">
-                <input type="range" id="hSlider3" class="h-slider" min="200" max="900" step="20" value="560">
-                <span class="h-val" id="hVal3">560px</span>
-              </div>
-            </div>
           </div>
         </section>
       </div>
