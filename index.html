@@ -389,6 +389,11 @@
       display: flex
     }
 
+    .tms-ms.open-up .tms-ms__pop {
+      top: auto;
+      bottom: calc(100% + 8px)
+    }
+
     .tms-ms__search {
       padding: var(--home-space-1) var(--home-space-5);
       border-bottom: 1px solid var(--home-color-border);
@@ -418,7 +423,7 @@
 
     .tms-ms__list {
       overflow-y: auto;
-      max-height: 280px;
+      max-height: clamp(120px, calc(100vh - 420px), 280px);
       padding: 4px 0
     }
 
@@ -1348,13 +1353,17 @@
     // ---- TMS Single Select logic ----
     function closeAllSels() {
       document.querySelectorAll('.tms-sel.open').forEach(s => s.classList.remove('open'));
+      const wrap = document.getElementById('msWrap');
+      if (wrap) {
+        wrap.classList.remove('open');
+        wrap.classList.remove('open-up');
+      }
     }
     document.querySelectorAll('.tms-sel').forEach(sel => {
       sel.querySelector('.tms-sel__trig').addEventListener('click', e => {
         e.stopPropagation();
         const wasOpen = sel.classList.contains('open');
         closeAllSels();
-        document.getElementById('msWrap').classList.remove('open');
         if (!wasOpen) sel.classList.add('open');
       });
       sel.querySelectorAll('.tms-sel__opt').forEach(opt => {
@@ -1459,13 +1468,24 @@
 
     document.getElementById('msBtn').addEventListener('click', e => {
       e.stopPropagation();
+      const wrap = document.getElementById('msWrap');
+      const wasOpen = wrap.classList.contains('open');
       closeAllSels();
-      document.getElementById('msWrap').classList.toggle('open');
+      if (!wasOpen) {
+        wrap.classList.add('open');
+        // Dynamic direction flip check based on vertical viewport clearance
+        const rect = wrap.getBoundingClientRect();
+        const spaceBelow = window.innerHeight - rect.bottom;
+        const popupHeight = 380; // approximate maximum height of popover
+        if (spaceBelow < popupHeight && rect.top > popupHeight) {
+          wrap.classList.add('open-up');
+        }
+      }
     });
     document.addEventListener('click', e => {
-      if (!document.getElementById('msWrap').contains(e.target))
-        document.getElementById('msWrap').classList.remove('open');
-      closeAllSels();
+      if (!document.getElementById('msWrap').contains(e.target)) {
+        closeAllSels();
+      }
     });
 
     // ---- Chart ----
@@ -1554,7 +1574,7 @@
             stacked: true,
             grid: { color: gridColor, lineWidth: 1 },
             border: { display: false },
-            ticks: { font: { size: 10 }, color: axisColor, stepSize: 50 },
+            ticks: { font: { size: 10 }, color: axisColor },
             title: { display: false }
           }
         },
@@ -1576,7 +1596,53 @@
 
     function sumArray(vals) { return vals.reduce((a, b) => a + b, 0); }
     function fmtGwh(v) { return Math.abs(v) >= 100 ? v.toFixed(0) : v.toFixed(1); }
-    function selectedTechLabels() { return ST_LABELS.filter(t => selectedST.has(t)); }
+    const ALL_TECH_ORDER = [
+      "Nuclear",
+      "Geothermal",
+      "Hydro",
+      "Biomass",
+      "Solar",
+      "Onshore wind",
+      "Offshore wind",
+      "Wind",
+      "Coal CCS - New",
+      "Coal CCS - Old",
+      "Coal (< 40-year life)",
+      "Coal (> 40-year life)",
+      "Coal",
+      "LNG (MACC)",
+      "LNG CCS (MACC) - New",
+      "LNG CCS (MACC) - Old",
+      "LNG (ACC)",
+      "LNG CCS (ACC)",
+      "LNG (CC)",
+      "LNG CCS (CC)",
+      "LNG (Conventional)",
+      "LNG CCS (Conventional)",
+      "LNG",
+      "Oil",
+      "Other Thermal",
+      "Others",
+      "Hydrogen",
+      "Ammonia",
+      "Utility BESS (Discharge)",
+      "Utility BESS",
+      "Utility BESS (Charge)",
+      "Pumped hydro (Discharge)",
+      "Pumped hydro",
+      "Pumped hydro (Charge)",
+      "DSR",
+      "V2G"
+    ];
+
+    const CURTAILMENT_COLOR = {
+      'Solar': '#F8E080',
+      'Onshore wind': '#A2D9A2',
+      'Offshore wind': '#609060',
+      'Wind': '#B5BD68'
+    };
+
+    function selectedTechLabels() { return ALL_TECH_ORDER.filter(t => selectedST.has(t)); }
     function indexOrAll(idx, labels) { return idx === -1 ? range(labels.length) : [idx]; }
 
     function totalForTech(dtI, mI, rI, scI, techLabel) {
@@ -2091,26 +2157,58 @@
         R_DISPLAY[rI] + ' — ' + SC_DISPLAY[scI];
 
       const datasets = [];
-      for (let stI = 0; stI < ST_LABELS.length; stI++) {
-        const t = ST_LABELS[stI];
-        if (!selectedST.has(t)) continue;
-        const vals = getVals(dtI, mI, rI, scI, stI);
-        const max = vals.reduce((a, b) => Math.max(a, b), 0);
-        const min = vals.reduce((a, b) => Math.min(a, b), 0);
-        if (max === 0 && min === 0) continue;
-        datasets.push({
-          label: t,
-          data: vals,
-          backgroundColor: TECH_COLOR[t] || '#aaa',
-          borderWidth: 0,
-          stack: 'main'
+
+      // Add Generation datasets first (at the bottom of the stack)
+      if (dtI === 1 || dtI === -1) {
+        ALL_TECH_ORDER.forEach(t => {
+          if (!selectedST.has(t)) return;
+          const stI = ST_LABELS.indexOf(t);
+          if (stI === -1) return;
+          const vals = getVals(1, mI, rI, scI, stI);
+          const max = vals.reduce((a, b) => Math.max(a, b), 0);
+          const min = vals.reduce((a, b) => Math.min(a, b), 0);
+          if (max === 0 && min === 0) return;
+          datasets.push({
+            label: t,
+            data: vals,
+            backgroundColor: TECH_COLOR[t] || '#aaa',
+            borderWidth: 0,
+            stack: 'main'
+          });
         });
       }
 
-      chart.data.datasets = datasets;
-      chart.update();
+      // Add Curtailment datasets at the very top of the stack
+      if (dtI === 0 || dtI === -1) {
+        const curtailOrder = ["Solar", "Onshore wind", "Offshore wind", "Wind"];
+        curtailOrder.forEach(t => {
+          if (!selectedST.has(t)) return;
+          const stI = ST_LABELS.indexOf(t);
+          if (stI === -1) return;
+          const vals = getVals(0, mI, rI, scI, stI);
+          const max = vals.reduce((a, b) => Math.max(a, b), 0);
+          const min = vals.reduce((a, b) => Math.min(a, b), 0);
+          if (max === 0 && min === 0) return;
+          
+          const label = dtI === -1 ? `${t} (Curtailment)` : t;
+          const color = dtI === -1 ? (CURTAILMENT_COLOR[t] || '#e6a13c') : (TECH_COLOR[t] || '#e6a13c');
+          
+          datasets.push({
+            label: label,
+            data: vals,
+            backgroundColor: color,
+            borderWidth: 0,
+            stack: 'main'
+          });
+        });
+      }
 
-      // Stats
+      // Bake visibility into dataset objects BEFORE assigning, so Chart.js
+      // initialises metasets with the correct hidden state on the single update below.
+      datasets.forEach(d => { d.hidden = hiddenST.has(d.label); });
+      chart.data.datasets = datasets;
+
+      // Stats (sum all datasets regardless of visibility so the numbers stay informative)
       const totals = new Array(48).fill(0);
       datasets.forEach(d => d.data.forEach((v, i) => totals[i] += v));
       const peak = totals.reduce((a, b) => Math.max(a, b), 0);
@@ -2122,10 +2220,28 @@
       document.getElementById('statPeakTime').textContent = peakIdx >= 0 && peak > 0 ? T_LABELS[peakIdx] : '—';
       document.getElementById('statTechs').textContent = datasets.length;
 
-      // Apply visibility for hidden techs
-      datasets.forEach((d, i) => {
-        chart.setDatasetVisibility(i, !hiddenST.has(d.label));
-      });
+      // Dynamic Y-axis: tightly fit VISIBLE stacked data on both ends.
+      // Handles negative values (BESS charge, pumped-hydro charge) so they never
+      // inflate the axis and squish the positive generation segments.
+      function calcYBounds() {
+        const pos = new Array(T_LABELS.length).fill(0);
+        const neg = new Array(T_LABELS.length).fill(0);
+        datasets.forEach(ds => {
+          if (!ds.hidden) {
+            ds.data.forEach((v, idx) => {
+              if (v > 0) pos[idx] += v;
+              else if (v < 0) neg[idx] += v;
+            });
+          }
+        });
+        const hi = pos.reduce((a, b) => Math.max(a, b), 0);
+        const lo = neg.reduce((a, b) => Math.min(a, b), 0);
+        // 8 % headroom above peak; floor at 0 unless there are genuine negatives
+        chart.options.scales.y.max = hi > 0 ? hi * 1.08 : 1;
+        chart.options.scales.y.min = lo < 0 ? lo * 1.08 : 0;
+        chart.options.scales.y.beginAtZero = false; // explicit min wins
+      }
+      calcYBounds();
       chart.update();
 
       // Legend
@@ -2144,7 +2260,10 @@
           if (hiddenST.has(d.label)) hiddenST.delete(d.label);
           else hiddenST.add(d.label);
           const nowHidden = hiddenST.has(d.label);
-          chart.setDatasetVisibility(i, !nowHidden);
+          // Update hidden state directly on the dataset object so Chart.js
+          // recalculates the stacked scale correctly on the next update.
+          d.hidden = nowHidden;
+          calcYBounds();
           chart.update();
           li.classList.toggle('hidden', nowHidden);
           li.title = nowHidden ? 'Click to show' : 'Click to hide';
