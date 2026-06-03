@@ -1488,11 +1488,11 @@
       // H2 / Ammonia
       'Hydrogen': '#C8921E', 'Ammonia': '#755959',
       // LNG
-      'LNG': '#B484D4', 'LNG (Conventional)': '#B484D4', 'LNG (CC)': '#9A6ABA',
-      'LNG (ACC)': '#8052A6', 'LNG (MACC)': '#663892',
+      'LNG': '#CC90C0', 'LNG (Conventional)': '#CC90C0', 'LNG (CC)': '#B878A8',
+      'LNG (ACC)': '#A46090', 'LNG (MACC)': '#9C3C84',
       // LNG CCS
-      'LNG CCS (Conventional)': '#DDD4EE', 'LNG CCS (CC)': '#CCBEE0', 'LNG CCS (ACC)': '#BBACCC',
-      'LNG CCS (MACC) - Old': '#AA98C0', 'LNG CCS (MACC) - New': '#9984B4',
+      'LNG CCS (Conventional)': '#E8D0E8', 'LNG CCS (CC)': '#D8C0D8', 'LNG CCS (ACC)': '#C8B0C8',
+      'LNG CCS (MACC) - Old': '#B8A0B8', 'LNG CCS (MACC) - New': '#A890A8',
       // Oil
       'Oil': '#F5DCA0',
       // Coal
@@ -1837,10 +1837,9 @@
     ];
 
     const CURTAILMENT_COLOR = {
-      'Solar': '#F8E080',
-      'Onshore wind': '#A2D9A2',
-      'Offshore wind': '#609060',
-      'Wind': '#B5BD68'
+      'Solar': '#FCF0B0',
+      'Onshore wind': '#C8E8C8',
+      'Offshore wind': '#90D090'
     };
 
     function selectedTechLabels() { return ALL_TECH_ORDER.filter(t => selectedST.has(t)); }
@@ -2388,7 +2387,7 @@
 
       // Curtailment (always at the very top of the stack)
       if (dtI === 0 || dtI === -1) {
-        const curtailOrder = ["Solar", "Onshore wind", "Offshore wind", "Wind"];
+        const curtailOrder = ["Solar", "Onshore wind", "Offshore wind"];
         curtailOrder.forEach(t => {
           if (!selectedST.has(t)) return;
           const stI = ST_LABELS.indexOf(t);
