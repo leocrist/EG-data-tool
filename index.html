@@ -2513,41 +2513,40 @@
       const allLegendItems = []; // full list for legend (visible + hidden)
       const datasets       = []; // chart data — visible only
 
-      // Transmission (placed below generation)
-      if (dtI === 2 || dtI === -1) {
-        ALL_TECH_ORDER.forEach(t => {
-          if (!selectedST.has(t)) return;
-          const stI = ST_LABELS.indexOf(t);
-          if (stI === -1) return;
+      // Generation and Transmission (bottom of stack → top, per ALL_TECH_ORDER)
+      ALL_TECH_ORDER.forEach(t => {
+        if (!selectedST.has(t)) return;
+        const stI = ST_LABELS.indexOf(t);
+        if (stI === -1) return;
+
+        // Generation
+        if (dtI === 1 || dtI === -1) {
+          const vals = getVals(1, mI, rI, scI, stI);
+          const mx = vals.reduce((a, b) => Math.max(a, b), 0);
+          const mn = vals.reduce((a, b) => Math.min(a, b), 0);
+          if (mx !== 0 || mn !== 0) {
+            const entry = { label: t, data: vals, backgroundColor: TECH_COLOR[t] || '#aaa', borderWidth: 0, stack: 'main' };
+            allLegendItems.push(entry);
+            if (!hiddenST.has(t)) datasets.push(entry);
+          }
+        }
+
+        // Transmission
+        if (dtI === 2 || dtI === -1) {
           const vals = getVals(2, mI, rI, scI, stI);
           const scale = dtI === -1 ? 0.001 : 1.0;
           const scaledVals = vals.map(v => v * scale);
           const mx = scaledVals.reduce((a, b) => Math.max(a, b), 0);
           const mn = scaledVals.reduce((a, b) => Math.min(a, b), 0);
-          if (mx === 0 && mn === 0) return;
-          const label = dtI === -1 ? `${t} (Transmission)` : t;
-          const color = TECH_COLOR[t] || '#A020F0';
-          const entry = { label, data: scaledVals, backgroundColor: color, borderWidth: 0, stack: 'main' };
-          allLegendItems.push(entry);
-          if (!hiddenST.has(label)) datasets.push(entry);
-        });
-      }
-
-      // Generation (bottom of stack → top, per ALL_TECH_ORDER)
-      if (dtI === 1 || dtI === -1) {
-        ALL_TECH_ORDER.forEach(t => {
-          if (!selectedST.has(t)) return;
-          const stI = ST_LABELS.indexOf(t);
-          if (stI === -1) return;
-          const vals = getVals(1, mI, rI, scI, stI);
-          const mx = vals.reduce((a, b) => Math.max(a, b), 0);
-          const mn = vals.reduce((a, b) => Math.min(a, b), 0);
-          if (mx === 0 && mn === 0) return;
-          const entry = { label: t, data: vals, backgroundColor: TECH_COLOR[t] || '#aaa', borderWidth: 0, stack: 'main' };
-          allLegendItems.push(entry);
-          if (!hiddenST.has(t)) datasets.push(entry);
-        });
-      }
+          if (mx !== 0 || mn !== 0) {
+            const label = dtI === -1 ? `${t} (Transmission)` : t;
+            const color = TECH_COLOR[t] || '#A020F0';
+            const entry = { label, data: scaledVals, backgroundColor: color, borderWidth: 0, stack: 'main' };
+            allLegendItems.push(entry);
+            if (!hiddenST.has(label)) datasets.push(entry);
+          }
+        }
+      });
 
       // Curtailment (always at the very top of the stack)
       if (dtI === 0 || dtI === -1) {
