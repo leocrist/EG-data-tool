@@ -1851,8 +1851,7 @@
       "Pumped hydro",
       "Pumped hydro (Charge)",
       "DSR",
-      "V2G",
-      "Interconnector"
+      "V2G"
     ];
 
     const CURTAILMENT_COLOR = {
@@ -2565,6 +2564,36 @@
           allLegendItems.push(entry);
           if (!hiddenST.has(label)) datasets.push(entry);
         });
+      }
+
+      // Interconnector (rendered after curtailment so it stacks above Offshore wind Curtailment)
+      if (selectedST.has('Interconnector')) {
+        const stI = ST_LABELS.indexOf('Interconnector');
+        if (stI !== -1) {
+          if (dtI === 1 || dtI === -1) {
+            const vals = getVals(1, mI, rI, scI, stI);
+            const mx = vals.reduce((a, b) => Math.max(a, b), 0);
+            const mn = vals.reduce((a, b) => Math.min(a, b), 0);
+            if (mx !== 0 || mn !== 0) {
+              const entry = { label: 'Interconnector', data: vals, backgroundColor: TECH_COLOR['Interconnector'] || '#aaa', borderWidth: 0, stack: 'main' };
+              allLegendItems.push(entry);
+              if (!hiddenST.has('Interconnector')) datasets.push(entry);
+            }
+          }
+          if (dtI === 2 || dtI === -1) {
+            const vals = getVals(2, mI, rI, scI, stI);
+            const scale = dtI === -1 ? 0.001 : 1.0;
+            const scaledVals = vals.map(v => v * scale);
+            const mx = scaledVals.reduce((a, b) => Math.max(a, b), 0);
+            const mn = scaledVals.reduce((a, b) => Math.min(a, b), 0);
+            if (mx !== 0 || mn !== 0) {
+              const label = dtI === -1 ? 'Interconnector (Transmission)' : 'Interconnector';
+              const entry = { label, data: scaledVals, backgroundColor: TECH_COLOR['Interconnector'] || '#1B9E9E', borderWidth: 0, stack: 'main' };
+              allLegendItems.push(entry);
+              if (!hiddenST.has(label)) datasets.push(entry);
+            }
+          }
+        }
       }
 
       // Assign only visible datasets — Chart.js scales purely from these values.
