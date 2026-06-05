@@ -1494,12 +1494,12 @@
       'V2G': '#78B4CC',
       // H2 / Ammonia
       'Hydrogen': '#C8921E', 'Ammonia': '#755959',
-      // LNG
-      'LNG': '#CC90C0', 'LNG (Conventional)': '#CC90C0', 'LNG (CC)': '#B878A8',
-      'LNG (ACC)': '#A46090', 'LNG (MACC)': '#9C3C84',
-      // LNG CCS
-      'LNG CCS (Conventional)': '#E8D0E8', 'LNG CCS (CC)': '#D8C0D8', 'LNG CCS (ACC)': '#C8B0C8',
-      'LNG CCS (MACC) - Old': '#B8A0B8', 'LNG CCS (MACC) - New': '#A890A8',
+      // LNG (most efficient → least: MACC → ACC → CC → Conventional; parent = MACC)
+      'LNG': '#9C3C84', 'LNG (MACC)': '#9C3C84',
+      'LNG (ACC)': '#B9489C', 'LNG (CC)': '#C465AC', 'LNG (Conventional)': '#CF82BC',
+      // LNG CCS (most efficient → least: MACC-New → MACC-Old → ACC → CC → Conventional)
+      'LNG CCS (MACC) - New': '#C07DAF', 'LNG CCS (MACC) - Old': '#CB95BE',
+      'LNG CCS (ACC)': '#D7ADCC', 'LNG CCS (CC)': '#E3C5DB', 'LNG CCS (Conventional)': '#EEDDEA',
       // Oil
       'Oil': '#F5DCA0',
       // Coal
