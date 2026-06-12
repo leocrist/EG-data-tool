@@ -136,10 +136,22 @@
     /* ── Page Layout ── */
     .page-layout {
       display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 24px;
+      grid-template-columns: 300px 1fr;
+      gap: 20px;
       align-items: flex-start;
     }
+
+    @media (max-width: 1366px) {
+      .page-layout {
+        grid-template-columns: 280px 1fr;
+        gap: 16px;
+      }
+
+      body {
+        padding: clamp(12px, 2vw, 24px);
+      }
+    }
+
 
     .sidebar {
       position: sticky;
@@ -152,6 +164,27 @@
       border-radius: 16px;
       box-shadow: 0 8px 32px rgba(3, 102, 214, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.4);
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(3, 102, 214, 0.2) transparent;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: rgba(3, 102, 214, 0.2);
+      border-radius: 2px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: rgba(3, 102, 214, 0.36);
     }
 
     .main-content {
@@ -235,6 +268,7 @@
       position: absolute;
       top: calc(100% + 8px);
       left: 0;
+      right: 0;
       z-index: 300;
       background: var(--home-color-surface-popover);
       border: 1px solid var(--home-color-border-strong);
@@ -242,13 +276,15 @@
       box-shadow: 0 24px 72px rgba(3, 33, 56, .22);
       backdrop-filter: blur(22px) saturate(1.18);
       -webkit-backdrop-filter: blur(22px) saturate(1.18);
-      min-width: 100%;
-      width: max-content;
-      max-width: min(360px, calc(100vw - 32px));
-      max-height: 320px;
+      max-height: min(320px, calc(100vh - 120px));
       overflow-y: auto;
       padding: 4px 0;
       display: none
+    }
+
+    .tms-sel.open-up .tms-sel__menu {
+      top: auto;
+      bottom: calc(100% + 8px)
     }
 
     .tms-sel.open .tms-sel__menu {
@@ -370,6 +406,7 @@
       position: absolute;
       top: calc(100% + 8px);
       left: 0;
+      right: 0;
       z-index: 300;
       background: var(--home-color-surface-popover);
       border: 1px solid var(--home-color-border-strong);
@@ -377,9 +414,7 @@
       box-shadow: 0 24px 72px rgba(3, 33, 56, .22);
       backdrop-filter: blur(22px) saturate(1.18);
       -webkit-backdrop-filter: blur(22px) saturate(1.18);
-      width: max-content;
-      min-width: 296px;
-      max-width: min(420px, calc(100vw - 32px));
+      max-height: min(480px, calc(100vh - 80px));
       display: none;
       flex-direction: column;
       overflow: hidden
@@ -423,7 +458,7 @@
 
     .tms-ms__list {
       overflow-y: auto;
-      max-height: clamp(120px, calc(100vh - 420px), 280px);
+      max-height: clamp(120px, calc(100vh - 320px), 360px);
       padding: 4px 0
     }
 
@@ -472,7 +507,9 @@
       color: var(--home-color-text-primary);
       flex: 1;
       user-select: none;
-      white-space: nowrap
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
     }
 
     .tms-ms__optchk {
@@ -857,8 +894,10 @@
       cursor: pointer;
     }
 
-    .mobile-overlay.open {
-      display: block;
+    @media (max-width: 1300px) {
+      .mobile-overlay.open {
+        display: block;
+      }
     }
 
     .mobile-filter-btn {
@@ -873,7 +912,7 @@
       display: none;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1300px) {
       body {
         padding: 0;
       }
@@ -1575,7 +1614,10 @@
 
     // ---- TMS Single Select logic ----
     function closeAllSels() {
-      document.querySelectorAll('.tms-sel.open').forEach(s => s.classList.remove('open'));
+      document.querySelectorAll('.tms-sel').forEach(s => {
+        s.classList.remove('open');
+        s.classList.remove('open-up');
+      });
       const wrap = document.getElementById('msWrap');
       if (wrap) {
         wrap.classList.remove('open');
@@ -1587,7 +1629,10 @@
         e.stopPropagation();
         const wasOpen = sel.classList.contains('open');
         closeAllSels();
-        if (!wasOpen) sel.classList.add('open');
+        if (!wasOpen) {
+          sel.classList.add('open');
+          positionSelMenu(sel);
+        }
       });
       sel.querySelectorAll('.tms-sel__opt').forEach(opt => {
         opt.addEventListener('click', e => {
@@ -1598,6 +1643,7 @@
           sel.querySelector('.tms-sel__val').textContent = lbl;
           sel.querySelectorAll('.tms-sel__opt').forEach(o => o.classList.toggle('sel', o.dataset.v === v));
           sel.classList.remove('open');
+          sel.classList.remove('open-up');
           update();
         });
       });
@@ -1699,12 +1745,26 @@
         // Dynamic direction flip check based on vertical viewport clearance
         const rect = wrap.getBoundingClientRect();
         const spaceBelow = window.innerHeight - rect.bottom;
-        const popupHeight = 380; // approximate maximum height of popover
+        const popupHeight = Math.min(380, window.innerHeight - 80); // adaptive height
         if (spaceBelow < popupHeight && rect.top > popupHeight) {
           wrap.classList.add('open-up');
         }
       }
     });
+
+    // Helper: position single-select dropdown intelligently
+    function positionSelMenu(sel) {
+      const menu = sel.querySelector('.tms-sel__menu');
+      if (!menu) return;
+      const rect = sel.getBoundingClientRect();
+      const menuHeight = Math.min(320, window.innerHeight - 120);
+      const spaceBelow = window.innerHeight - rect.bottom;
+      if (spaceBelow < menuHeight && rect.top > menuHeight) {
+        sel.classList.add('open-up');
+      } else {
+        sel.classList.remove('open-up');
+      }
+    }
     document.addEventListener('click', e => {
       if (!document.getElementById('msWrap').contains(e.target)) {
         closeAllSels();
@@ -2423,7 +2483,7 @@
 
     function applyResponsiveChartOptions() {
       const isCompact = window.matchMedia('(max-width: 640px)').matches;
-      const isTablet = window.matchMedia('(max-width: 900px)').matches;
+      const isTablet = window.matchMedia('(max-width: 1300px)').matches;
       const timeTickLimit = isCompact ? 8 : isTablet ? 12 : 24;
       const timeTickFont = isCompact ? 8 : 9;
       const axisTickFont = isCompact ? 9 : 10;
@@ -2446,7 +2506,14 @@
       [chart, mixChart, scenarioChart, ratioChart, curtailChart, volumeRatioComboChart, scenarioProfileLineChart, regionSharePieChart, scenarioSharePieChart, curtailmentSharePieChart, yoyCapacityChart, regionalGenerationChart, scenarioCapacityChart].forEach(c => c.update('none'));
     }
 
-    window.addEventListener('resize', applyResponsiveChartOptions);
+    function handleResize() {
+      closeAllSels();
+      applyResponsiveChartOptions();
+      if (window.innerWidth > 1300) {
+        closeSidebar();
+      }
+    }
+    window.addEventListener('resize', handleResize);
 
     function updateSecondaryCharts(dtI, mI, rI, scI) {
       const unit = dtI === 2 ? 'MWh' : 'GWh';
